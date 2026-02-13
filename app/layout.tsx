@@ -13,7 +13,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Broadcaster - Où regarder ce soir ?",
+  title: "Broadcaster",
   description:
     "Broadcaster vous aide à trouver où et quand regarder vos films et séries préférés en France : cinéma, TV, Netflix, Prime Video, Disney+ et plus.",
 };
