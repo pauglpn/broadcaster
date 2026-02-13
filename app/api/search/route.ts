@@ -99,7 +99,8 @@ export async function GET(request: NextRequest) {
         })) || [];
 
         // Fusionner les plateformes SVOD (JustWatch + TMDB), éviter les doublons
-        const allSVOD = [...svodPlatforms];
+        const svodArray = Array.isArray(svodPlatforms) ? svodPlatforms : [];
+        const allSVOD = [...svodArray];
         for (const tmdbPlatform of tmdbSVOD) {
           if (!allSVOD.find((p) => p.platform === tmdbPlatform.platform)) {
             allSVOD.push(tmdbPlatform);

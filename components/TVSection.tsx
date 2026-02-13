@@ -39,7 +39,7 @@ export default function TVSection({ broadcasts, title }: TVSectionProps) {
       // Déterminer le type de contenu depuis les broadcasts
       const contentType = sortedBroadcasts[0]?.type || 'movie';
       const buffer = await generateTVScheduleExcel(title, sortedBroadcasts, contentType);
-      const blob = new Blob([buffer], {
+      const blob = new Blob([new Uint8Array(buffer)], {
         type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
       });
       const url = window.URL.createObjectURL(blob);

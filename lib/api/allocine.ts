@@ -51,7 +51,7 @@ export async function getCinemaRelease(title: string, year?: number): Promise<Ci
     
     // Extraire la date de sortie
     const releaseDateText = $film('.meta-body-item').filter((_, el) => {
-      return $(el).text().includes('Sortie le') || $(el).text().includes('Date de sortie');
+      return $film(el).text().includes('Sortie le') || $film(el).text().includes('Date de sortie');
     }).first().text();
 
     if (!releaseDateText) {
