@@ -1,5 +1,5 @@
 {
-  "name": "mon-site-svod",
+  "name": "broadcaster",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -9,9 +9,17 @@
     "lint": "eslint"
   },
   "dependencies": {
+    "@hookform/resolvers": "^5.2.2",
+    "axios": "^1.13.5",
+    "date-fns": "^4.1.0",
+    "exceljs": "^4.4.0",
+    "lucide-react": "^0.564.0",
     "next": "16.1.6",
     "react": "19.2.3",
-    "react-dom": "19.2.3"
+    "react-dom": "19.2.3",
+    "react-hook-form": "^7.71.1",
+    "swr": "^2.4.0",
+    "zod": "^4.3.6"
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4",
