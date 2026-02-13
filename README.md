@@ -1,36 +1,92 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Broadcaster
 
-## Getting Started
+Plateforme de recherche de disponibilité des films et séries en France.
 
-First, run the development server:
+## Fonctionnalités
 
+- 🔍 **Recherche avancée** : Trouvez des films et séries par titre, réalisateur, année et type
+- 🎬 **Sorties cinéma** : Consultez les dates de sortie en salles en France
+- 📺 **Diffusions TV** : Découvrez quand vos programmes passent à la télévision
+- 🎥 **Plateformes SVOD** : Trouvez sur quelles plateformes de streaming vos contenus sont disponibles
+- 📊 **Export Excel** : Téléchargez les grilles TV pour consultation hors ligne
+
+## Installation
+
+1. Clonez le repository :
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+git clone https://github.com/pauglpn/broadcaster.git
+cd broadcaster
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+2. Installez les dépendances :
+```bash
+npm install
+```
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+3. Configurez les variables d'environnement :
+Créez un fichier `.env.local` à la racine du projet :
+```env
+TMDB_API_KEY=votre_clé_api_tmdb
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Pour obtenir une clé API TMDB :
+1. Créez un compte sur [The Movie Database](https://www.themoviedb.org/)
+2. Allez dans Paramètres > API
+3. Demandez une clé API
+4. Copiez la clé dans votre fichier `.env.local`
 
-## Learn More
+4. Lancez le serveur de développement :
+```bash
+npm run dev
+```
 
-To learn more about Next.js, take a look at the following resources:
+5. Ouvrez [http://localhost:3000](http://localhost:3000) dans votre navigateur.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Structure du projet
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+```
+broadcaster/
+├── app/
+│   ├── api/          # Routes API (autocomplete, search)
+│   ├── about/        # Page À propos
+│   ├── results/      # Page de résultats
+│   ├── layout.tsx    # Layout principal
+│   └── page.tsx      # Page d'accueil
+├── components/       # Composants React
+│   ├── CinemaSection.tsx
+│   ├── Navigation.tsx
+│   ├── SearchForm.tsx
+│   ├── SVODSection.tsx
+│   └── TVSection.tsx
+├── lib/
+│   ├── api/          # APIs et scrapers (TMDB, JustWatch, Allociné, TV)
+│   ├── hooks/        # Hooks React personnalisés
+│   ├── types/        # Types TypeScript
+│   └── utils/        # Utilitaires (export Excel, cache)
+└── public/           # Fichiers statiques
+```
 
-## Deploy on Vercel
+## Technologies utilisées
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+- **Next.js 16** : Framework React
+- **TypeScript** : Typage statique
+- **Tailwind CSS** : Styles
+- **ExcelJS** : Génération de fichiers Excel
+- **TMDB API** : Données films et séries
+- **JustWatch API** : Disponibilité SVOD
+- **Cheerio** : Scraping HTML
+- **Axios** : Requêtes HTTP
+- **date-fns** : Manipulation de dates
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## Déploiement
+
+Le projet peut être déployé sur [Vercel](https://vercel.com) :
+
+1. Connectez votre compte GitHub
+2. Importez le repository `broadcaster`
+3. Ajoutez la variable d'environnement `TMDB_API_KEY`
+4. Déployez !
+
+## Licence
+
+MIT

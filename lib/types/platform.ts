@@ -27,6 +27,10 @@ export interface TVBroadcast {
   date: Date;
   time: string;
   episodeTitle?: string;
+  type?: 'movie' | 'series';
+  season?: number;
+  episode?: number;
+  reference?: string; // Format SxxExx pour les séries
 }
 
 export interface CinemaRelease {
