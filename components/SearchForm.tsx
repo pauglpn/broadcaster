@@ -72,45 +72,50 @@ export default function SearchForm() {
             setShowSuggestions(true);
           }}
           onFocus={() => setShowSuggestions(true)}
-          onBlur={() => setTimeout(() => setShowSuggestions(false), 200)}
+          onBlur={() => setTimeout(() => setShowSuggestions(false), 250)}
           onKeyDown={handleKeyDown}
           placeholder="Ex: Inception, Breaking Bad..."
           className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+          autoComplete="off"
           required
           minLength={2}
         />
-        {showSuggestions && suggestions.length > 0 && (
+        {showSuggestions && title.length >= 2 && (
           <div className="absolute z-10 w-full mt-1 bg-white border border-gray-300 rounded-lg shadow-lg max-h-64 overflow-y-auto">
-            {isLoading && (
-              <div className="px-4 py-2 text-gray-500">Chargement...</div>
-            )}
-            {suggestions.map((suggestion, index) => (
-              <button
-                key={suggestion.id}
-                type="button"
-                onClick={() => handleSuggestionClick(suggestion)}
-                className={`w-full text-left px-4 py-2 hover:bg-gray-100 ${
-                  index === selectedIndex ? 'bg-blue-50' : ''
-                }`}
-              >
-                <div className="flex items-center gap-3">
-                  {suggestion.poster && (
-                    <img
-                      src={`https://image.tmdb.org/t/p/w92${suggestion.poster}`}
-                      alt=""
-                      className="w-12 h-16 object-cover rounded"
-                    />
-                  )}
-                  <div>
-                    <div className="font-medium">{suggestion.title}</div>
-                    {suggestion.originalTitle !== suggestion.title && (
-                      <div className="text-sm text-gray-500">{suggestion.originalTitle}</div>
+            {isLoading ? (
+              <div className="px-4 py-3 text-gray-500">Chargement...</div>
+            ) : suggestions.length > 0 ? (
+              suggestions.map((suggestion, index) => (
+                <button
+                  key={suggestion.id}
+                  type="button"
+                  onMouseDown={(e) => e.preventDefault()}
+                  onClick={() => handleSuggestionClick(suggestion)}
+                  className={`w-full text-left px-4 py-2 hover:bg-gray-100 ${
+                    index === selectedIndex ? 'bg-blue-50' : ''
+                  }`}
+                >
+                  <div className="flex items-center gap-3">
+                    {suggestion.poster && (
+                      <img
+                        src={`https://image.tmdb.org/t/p/w92${suggestion.poster}`}
+                        alt=""
+                        className="w-12 h-16 object-cover rounded"
+                      />
                     )}
-                    <div className="text-sm text-gray-400">{suggestion.year}</div>
+                    <div>
+                      <div className="font-medium">{suggestion.title}</div>
+                      {suggestion.originalTitle !== suggestion.title && (
+                        <div className="text-sm text-gray-500">{suggestion.originalTitle}</div>
+                      )}
+                      <div className="text-sm text-gray-400">{Number.isNaN(suggestion.year) ? '' : suggestion.year}</div>
+                    </div>
                   </div>
-                </div>
-              </button>
-            ))}
+                </button>
+              ))
+            ) : (
+              <div className="px-4 py-3 text-gray-500">Aucun résultat trouvé.</div>
+            )}
           </div>
         )}
       </div>

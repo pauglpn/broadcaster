@@ -80,6 +80,11 @@ export function useAutocomplete(
     setSelectedIndex((prev) => (prev > 0 ? prev - 1 : -1));
   }, []);
 
+  // Réinitialiser l’index sélectionné quand les suggestions changent
+  useEffect(() => {
+    setSelectedIndex(-1);
+  }, [suggestions]);
+
   return {
     suggestions,
     isLoading,
@@ -87,6 +92,7 @@ export function useAutocomplete(
     clearSuggestions,
     selectNext,
     selectPrevious,
+    hasSearched: debouncedQuery.length >= (options.minChars || 2),
   };
 }
 

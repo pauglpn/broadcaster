@@ -14,6 +14,14 @@ export async function GET(request: NextRequest) {
     return NextResponse.json({ suggestions: [] });
   }
 
+  if (!TMDB_API_KEY) {
+    console.error('TMDB_API_KEY manquante dans .env.local');
+    return NextResponse.json(
+      { suggestions: [], error: 'Configuration API manquante' },
+      { status: 200 },
+    );
+  }
+
   try {
     const endpoint = type === 'movie' ? '/search/movie' : '/search/tv';
     const response = await axios.get(`${TMDB_BASE_URL}${endpoint}`, {
@@ -25,18 +33,23 @@ export async function GET(request: NextRequest) {
       },
     });
 
-    const results = response.data.results.slice(0, limit).map((item: any) => ({
-      id: item.id,
-      title: item.title || item.name,
-      originalTitle: item.original_title || item.original_name,
-      year: new Date(item.release_date || item.first_air_date || '').getFullYear(),
-      poster: item.poster_path,
-      type: type === 'movie' ? 'movie' : 'tv',
-    }));
+    const rawResults = response.data.results || [];
+    const results = rawResults.slice(0, limit).map((item: any) => {
+      const dateStr = item.release_date || item.first_air_date || '';
+      const year = dateStr ? new Date(dateStr).getFullYear() : 0;
+      return {
+        id: item.id,
+        title: item.title || item.name,
+        originalTitle: item.original_title || item.original_name || '',
+        year: Number.isInteger(year) ? year : 0,
+        poster: item.poster_path || null,
+        type: type === 'movie' ? 'movie' : 'tv',
+      };
+    });
 
     return NextResponse.json({ suggestions: results });
   } catch (error) {
     console.error('Erreur autocomplete:', error);
-    return NextResponse.json({ suggestions: [] }, { status: 500 });
+    return NextResponse.json({ suggestions: [] });
   }
 }
